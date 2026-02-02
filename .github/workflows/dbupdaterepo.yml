@@ -3,7 +3,7 @@ name: Update Databricks Repository
 on:
   push:
     branches:
-      - main  # ou especifique os branches que deseja monitorar
+      - dev  # ou especifique os branches que deseja monitorar
 
 jobs:
   update:
@@ -26,6 +26,6 @@ jobs:
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
         run: |
-          databricks repos update "/Workspace/Repos/projects/databricks-workspace-lab" --branch main
+          databricks repos update "/Workspace/Repos/projects/databricks-workspace-lab" --branch stg
           
         
