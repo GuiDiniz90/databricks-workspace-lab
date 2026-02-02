@@ -1,23 +1,31 @@
+name: Update Databricks Repository
+
 on:
-    push
+  push:
+    branches:
+      - main  # ou especifique os branches que deseja monitorar
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
     
-    jobs:
-      update:
-      runs-on: ubuntu-latest
-  
-      steps:
-        - name: Setup Python
-          uses: actions/setup-python@v3
-          with:
-            python-version: 3.8
-        
-        - name: Install Databricks CLI
-          uses: databricks/setup-cli@main
-  
-        - name: Remote update Prod Repo
-          env:
-            DATABRICKS_HOST: $
-            DATABRICKS_TOKEN: $
-          run: databricks repos update "/Workspace/Repos/projects/databricks-workspace-lab/GitHub Folders" --branch main
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.8'
+      
+      - name: Install Databricks CLI
+        uses: databricks/setup-cli@main
+      
+      - name: Remote update Prod Repo
+        env:
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+        run: |
+          databricks repos update "/Workspace/Repos/projects/databricks-workspace-lab/GitHub Folders" --branch main
           
         
